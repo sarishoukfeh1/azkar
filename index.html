@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>أذكار بعد الصلاة</title>
+
+<style>
+body {
+    font-family: Arial;
+    margin: 0;
+    background: linear-gradient(to bottom, #000, #555);
+}
+
+/* الحاوية */
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main {
+    flex: 1;
+    padding: 15px;
+}
+
+/* الذكر */
+.zikr {
+    margin: 15px 0;
+    padding: 20px;
+    border: 4px solid white;
+    border-radius: 12px;
+    text-align: center;
+    color: white;
+}
+
+.text {
+    font-size: 26px;
+    margin: 10px 0;
+}
+
+.target {
+    font-size: 18px;
+}
+
+/* العداد */
+.counter {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+/* زر العد */
+.btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* الجهة الجانبية */
+.sidebar {
+    width: 120px;
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+}
+
+.box {
+    background: white;
+    padding: 10px;
+    text-align: center;
+}
+
+/* موبايل */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .text {
+        font-size: 22px;
+    }
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<div class="main">
+
+<h2 style="color:white; text-align:center;">📿 أذكار بعد الصلاة</h2>
+
+<!-- استغفار -->
+<div class="zikr">
+    <div class="target">المطلوب: 3 مرات</div>
+    <div class="text">أستغفر الله</div>
+    <div class="counter">0</div>
+    <button class="btn" onclick="count(this,3)">اضغط</button>
+</div>
+
+<div class="zikr">
+    <div class="text">اللهم أنت السلام ومنك السلام تباركت يا ذا الجلال والإكرام</div>
+</div>
+
+<!-- تسبيح -->
+<div class="zikr">
+    <div class="target">33 مرة</div>
+    <div class="text">سبحان الله</div>
+    <div class="counter">0</div>
+    <button class="btn" onclick="count(this,33)">اضغط</button>
+</div>
+
+<div class="zikr">
+    <div class="target">33 مرة</div>
+    <div class="text">الحمد لله</div>
+    <div class="counter">0</div>
+    <button class="btn" onclick="count(this,33)">اضغط</button>
+</div>
+
+<div class="zikr">
+    <div class="target">34 مرة</div>
+    <div class="text">الله أكبر</div>
+    <div class="counter">0</div>
+    <button class="btn" onclick="count(this,34)">اضغط</button>
+</div>
+
+<!-- أذكار إضافية -->
+<div class="zikr"><div class="text">لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير</div></div>
+<div class="zikr"><div class="text">اللهم لا مانع لما أعطيت ولا معطي لما منعت ولا ينفع ذا الجد منك الجد</div></div>
+<div class="zikr"><div class="text">اللهم أعني على ذكرك وشكرك وحسن عبادتك</div></div>
+<div class="zikr"><div class="text">اللهم إني أسألك الجنة وأعوذ بك من النار</div></div>
+<div class="zikr"><div class="text">اللهم اغفر لي ولوالدي وللمؤمنين يوم يقوم الحساب</div></div>
+
+<button class="btn" onclick="resetCounts()">🔄 تصفير</button>
+
+</div>
+
+<div class="sidebar">
+    <div class="box" id="dateBox"></div>
+</div>
+
+</div>
+
+<script>
+// التاريخ
+document.getElementById("dateBox").innerText =
+    new Date().toLocaleDateString('en-US');
+
+// صوت
+function speakDone() {
+    const msg = new SpeechSynthesisUtterance("أكملت السنة");
+    msg.lang = "ar-SA";
+    speechSynthesis.speak(msg);
+}
+
+// اهتزاز
+function vibrate() {
+    if(navigator.vibrate){
+        navigator.vibrate(300);
+    }
+}
+
+// العد
+function count(button, target) {
+    let box = button.parentElement;
+    let counter = box.querySelector(".counter");
+
+    let value = parseInt(counter.innerText) + 1;
+    counter.innerText = value;
+
+    if(value === target){
+        speakDone();
+        vibrate();
+    }
+}
+
+// تصفير
+function resetCounts(){
+    document.querySelectorAll(".counter").forEach(c => c.innerText = 0);
+}
+</script>
+
+</body>
+</html>
